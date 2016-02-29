@@ -1,0 +1,11 @@
+#!/bin/bash -l
+
+#SBATCH -A als
+#SBATCH -p realtime
+#SBATCH -N 1
+#SBATCH -t 00:30:00
+#SBATCH -J tomopy
+
+#module load contrib/tomopy/0.1.15
+srun -n1 echo "hello"
+#srun -n 1 /global/common/cori/software/contrib/tomopy/0.1.15/test/hello

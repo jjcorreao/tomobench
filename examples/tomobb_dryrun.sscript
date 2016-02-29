@@ -1,0 +1,11 @@
+#!/bin/bash
+
+#SBATCH -p regular
+#SBATCH -N 1
+#SBATCH -t 01:00:00
+#DW jobdw capacity=10GB access_mode=striped type=scratch
+#DW stage_in source=/global/cscratch1/sd/username/path/to/filename destination=$DW_JOB_STRIPED/filename type=file
+#DW stage_out source=$DW_JOB_STRIPED/dirname destination=/global/cscratch1/sd/username/path/to/dirname type=directory
+
+
+srun a.out --inputfile=$DW_JOB_STRIPED/filename

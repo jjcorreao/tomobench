@@ -1,0 +1,12 @@
+#!/bin/bash -l
+
+#SBATCH -p realtime 
+#SBATCH --exclusive     
+#SBATCH -N 4           
+#SBATCH -t 01:00:00     
+#SBATCH -J tomopy
+
+#srun -n 128 ./my_exe
+# or
+#export OMP_NUM_THREADS=8
+#srun -N 4 -n 16 -c 8 ./mycode.exe

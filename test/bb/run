@@ -1,0 +1,2 @@
+salloc -N 4 -p realtime --exclusive -A als -t 01:00:00 --bbf="/global/common/cori/software/contrib/tomopy/0.1.15/test/bb/bbf.conf"
+
