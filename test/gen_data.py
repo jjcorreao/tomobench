@@ -4,17 +4,38 @@ import tomopy
 import numpy
 import time
 
-print "Hey!"
+fname = "/home/oxygen/DGURSOY/Data/Hornby_SLS_2011.h5"
 
-obj = numpy.ones((512, 512, 512), dtype='float32')
-ang = tomopy.angles(512)
-
+# load DataExchange data
 t = time.time()
-prj = tomopy.project(obj, ang)
+prj, flt, drk = tomopy.read_aps_2bm(fname, sino=(1000, 1032))
+print prj.shape, flt.shape, drk.shape
 print time.time() - t
 
+# define projection angles
+ang = tomopy.angles(prj.shape[0])
+
+# data normalization
 t = time.time()
-rec = tomopy.recon(prj, ang, algorithm='gridrec', num_gridx=1024, num_gridy=1024)
+prj = tomopy.normalize(prj, flt, drk)
 print time.time() - t
 
-tomopy.write_tiff_stack(rec, overwrite=True)
+# phase retrieval
+t = time.time()
+prj = tomopy.retrieve_phase(prj)
+print time.time() - t
+
+# reconstruct
+t = time.time()
+rec = tomopy.recon(prj, ang,
+	algorithm='gridrec',
+	center=1010,
+	alpha=1e-4,
+	emission=False)
+print time.time() - t
+
+# save as tiff stack
+tomopy.write_tiff_stack(rec, overwrite=False)
+
+# save as hdf
+tomopy.write_tiff_stack(rec, overwrite=False)
