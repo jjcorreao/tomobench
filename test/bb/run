@@ -1,2 +1,4 @@
 salloc -N 4 -p realtime --exclusive -A als -t 01:00:00 --bbf="/global/common/cori/software/contrib/tomopy/0.1.15/test/bb/bbf.conf"
+salloc -N 1 -p realtime --exclusive -A als -t 01:00:00 --bbf="/global/common/cori/software/contrib/tomopy/0.1.15/test/bb/bbf.conf"
+salloc -N 1 -p realtime --exclusive -A als -t 01:00:00 --bbf="/global/cscratch1/sd/alsdata/bbeup/tomobench/test/bb/bbf.conf"
 

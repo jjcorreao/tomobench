@@ -1,10 +1,29 @@
-#!/bin/bash 
+#!/bin/bash -l 
 
 #SBATCH -A als
 #SBATCH -p realtime
-#SBATCH -N 1
-#SBATCH -t 01:00:00
-#DW jobdw capacity=200GB access_mode=striped type=scratch
+#SBATCH -N 4
+#SBATCH -t 02:00:00
+#DW jobdw capacity=500GB access_mode=striped type=scratch
 
+#BBDATA=$DW_JOB_STRIPED/d
+#BBOUT=$DW_JOB_STRIPED/out
 
-srun a.out --scratchdirname=$DW_JOB_STRIPED
+mkdir -p $DW_JOB_STRIPED/data
+mkdir -p $DW_JOB_STRIPED/tomobench
+#mkdir -p $BBOUT
+
+DATASET=/global/cscratch1/sd/alsdata/bbeup/data/Hornby_SLS_2011.h5
+TOMOBENCH=/global/cscratch1/sd/alsdata/bbeup/tomobench
+#cp /global/cscratch1/sd/alsdata/bbeup/data/Hornby_SLS_2011.h5 $BBDATA
+#cp -r /global/cscratch1/sd/alsdata/bbeup $DW_JOB_STRIPED
+cp $DATASET $DW_JOB_STRIPED/data
+cp -r $TOMOBENCH $DW_JOB_STRIPED
+
+module load contrib/tomopy/0.1.15
+
+#srun -N 1 -n 1 -c 64 ./hello --mem=488000
+srun -N 1 -n 1 -c 64 --mem=488000 python $DW_JOB_STRIPED/tomobench/test/gen_data_.py
+#srun -n 1 python $DW_JOB_STRIPED/bbeup/tomobench/test/gen_data_.py
+
+#srun a.out --scratchdirname=$DW_JOB_STRIPED
