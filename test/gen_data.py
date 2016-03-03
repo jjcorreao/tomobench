@@ -47,7 +47,8 @@ prj = numpy.random( ... )
 
 # phase retrieval
 t = time.time()
-prj = tomopy.retrieve_phase(prj)
+prj = tomopy.retrieve_phase(prj,
+	alpha=1e-4)
 print time.time() - t
 
 # reconstruct
@@ -55,7 +56,6 @@ t = time.time()
 rec = tomopy.recon(prj, ang,
 	algorithm='gridrec',
 	center=1010,
-	alpha=1e-4,
 	emission=False)
 print time.time() - t
 
